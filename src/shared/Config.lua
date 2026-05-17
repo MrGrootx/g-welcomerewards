@@ -11,6 +11,9 @@ Config.SystemSettings = {
 	Currency = "$",
 }
 
+-- g-notifications package - https://groot-development.tebex.io/package/6838310
+Config.Notify = "g-notifications" -- supported Notification's' - "g-notifications" | "ox_lib" | "esx" | "qbcore" | "okok"  | 17mov | standalone
+
 Config.WelcomePackage = {
 	OpenMenuType = "location", -- supported types - "location" | "command" | "inventory_item"
 	SlashCommand = "welcome", -- Command to open the shop if OpenMenuType is "command

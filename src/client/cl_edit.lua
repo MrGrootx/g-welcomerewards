@@ -120,3 +120,54 @@ AddEventHandler("onResourceStop", function(resource)
 	end
 	cleanup()
 end)
+
+
+-- Notifications
+local Notification = Config.Notify
+Notify = function(message, type, duration)
+	if not type then
+		type = "success"
+	end
+	if not duration then
+		duration = 5000
+	end
+
+	if Notification == "esx" then
+		ESX.ShowNotification(message)
+	elseif Notification == "okok" then
+		exports.okokNotify:Alert(type, message, duration, type, false)
+	elseif Notification == "qbcore" then
+		if type == "info" then
+			type = "primary"
+		end
+		QBCore.Functions.Notify(message, type, duration)
+	elseif Notification == "ox_lib" then
+		exports["ox_lib"]:notify({
+			title = "Notification",
+			description = message,
+			type = type,
+			duration = duration,
+			position = "top-right",
+		})
+	elseif Notification == "17mov" then
+		exports["17mov_Hud"]:ShowNotification(message, type, "Notification", duration)
+	elseif Notification == "standalone" then
+		AddTextEntry("g_bridge", message)
+		BeginTextCommandThefeedPost("g_bridge")
+		EndTextCommandThefeedPostTicker(false, true)
+	elseif Notification == "g-notifications" then
+		exports["g-notifications"]:Notify({
+			title = "Notification",
+			description = message,
+			type = type,
+			duration = duration,
+			position = "top-right",
+		})
+	else
+		print("Notification type not found")
+	end
+end
+
+RegisterNetEvent("justgroot:g-welcome-rewards:notify", function(message, type, duration)
+	Notify(message, type, duration)
+end)

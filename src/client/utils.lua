@@ -1,34 +1,28 @@
---- A simple wrapper around SendNUIMessage that you can use to
---- dispatch actions to the React frame.
----
----@param action string The action you wish to target
----@param data any The data you wish to send along with this action
 function SendReactMessage(action, data)
-    SendNUIMessage({
-        action = action,
-        data = data
-    })
+	SendNUIMessage({
+		action = action,
+		data = data,
+	})
 end
 
 local currentResourceName = GetCurrentResourceName()
 
-local debugIsEnabled = GetConvarInt(('%s-debugMode'):format(currentResourceName), 0) == 1
+local debugIsEnabled = GetConvarInt(("%s-debugMode"):format(currentResourceName), 0) == 1
 
---- A simple debug print function that is dependent on a convar
---- will output a nice prettfied message if debugMode is on
 function debugPrint(...)
-    if not debugIsEnabled then return end
-    local args <const> = { ... }
-  
-    local appendStr = ''
-    for _, v in ipairs(args) do
-      appendStr = appendStr .. ' ' .. tostring(v)
-    end
-    local msgTemplate = '^3[%s]^0%s'
-    local finalMsg = msgTemplate:format(currentResourceName, appendStr)
-    print(finalMsg)
-end
+	if not debugIsEnabled then
+		return
+	end
+	local args <const> = { ... }
 
+	local appendStr = ""
+	for _, v in ipairs(args) do
+		appendStr = appendStr .. " " .. tostring(v)
+	end
+	local msgTemplate = "^3[%s]^0%s"
+	local finalMsg = msgTemplate:format(currentResourceName, appendStr)
+	print(finalMsg)
+end
 
 -- some functions are from ox_lib
 
@@ -53,35 +47,31 @@ function CCreateBlip(x, y, z, idtype, idcolor, text, scale, set_route)
 	end
 end
 
-
 function RRequestModel(model, timeout)
-    if type(model) ~= "number" then
-        model = joaat(model)
-    end
+	if type(model) ~= "number" then
+		model = joaat(model)
+	end
 
-    if HasModelLoaded(model) then
-        return model
-    end
+	if HasModelLoaded(model) then
+		return model
+	end
 
-    if not IsModelValid(model) or not IsModelInCdimage(model) then
-		DebugLog(string.format("Invalid or missing model: %s", model))
-        return false
-    end
+	if not IsModelValid(model) or not IsModelInCdimage(model) then
+		return false
+	end
 
-    RequestModel(model)
-    local startTime = GetGameTimer()
+	RequestModel(model)
+	local startTime = GetGameTimer()
 
-    while not HasModelLoaded(model) do
-        if GetGameTimer() - startTime > timeout then
-			DebugLog(string.format("Failed to load model '%s' within %d ms", model, timeout))
-            return false
-        end
-        Wait(100)
-    end
+	while not HasModelLoaded(model) do
+		if GetGameTimer() - startTime > timeout then
+			return false
+		end
+		Wait(100)
+	end
 
-    return model
+	return model
 end
-
 
 function SStreamingRequest(request, hasLoaded, assetType, asset, timeout, ...)
 	if hasLoaded(asset) then

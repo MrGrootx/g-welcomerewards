@@ -1,0 +1,5 @@
+-- RegisterCommand("testwelcomeexploit", function()
+--     G.Callbacks.Client.Trigger("justgroot:g-welcome-rewards:claimWelcomePackage:server", function(result)
+--         print("Result:", json.encode(result))
+--     end)
+-- end)

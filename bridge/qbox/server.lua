@@ -108,7 +108,6 @@ function G.Server.PlayerJobinfo(src)
 end
 
 function G.Server.AddMoney(src, type, amount, cb)
-    DebugLog(("[AddMoney] src: %s, type: %s, amount: %s"):format(src, type, amount))
 
     if not src or not type or not amount then
         if cb then

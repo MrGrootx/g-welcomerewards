@@ -1,1 +1,3 @@
 SVConfig = {}
+
+SVConfig.DropSuspiciousPlayer = true

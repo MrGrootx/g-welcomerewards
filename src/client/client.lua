@@ -55,3 +55,15 @@ RegisterNUICallback("justgroot:g-welcome-rewards:getWelcomeVehicle", function(da
 	local vehicle = Config.WelcomePackage.StarterVehicle
 	cb(vehicle)
 end)
+
+RegisterNUICallback("justgroot:g-welcome-rewards:claimWelcomePackage", function(_, cb)
+	G.Callbacks.Client.Trigger("justgroot:g-welcome-rewards:claimWelcomePackage:server", function(response)
+		cb(response)
+	end, {})
+end)
+
+RegisterNUICallback("justgroot:g-welcome-rewards:claimWelcomeVehicle", function(_, cb)
+	G.Callbacks.Client.Trigger("justgroot:g-welcome-rewards:claimWelcomeVehicle:server", function(response)
+		cb(response)
+	end, {})
+end)

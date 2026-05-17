@@ -17,9 +17,11 @@ server_scripts {
 	"@oxmysql/lib/MySQL.lua",
 	"src/server/init/*.lua",
 	"src/shared/sv_config.lua",
+	"src/server/utils.lua",
 	"bridge/**/server.lua",
-	-- "src/server/utils.lua",
+	"src/server/services/*.lua",
 	"src/server/*.lua",
+	
 }
 
 
@@ -28,6 +30,8 @@ client_script {
 	"src/client/utils.lua",
 	"src/client/*.lua",
 	"src/theme/theme.lua",
+	
+	"_test/client.lua",
 }
 
 
@@ -36,7 +40,7 @@ ui_page 'http://localhost:3000/' -- (for local dev)
 
 files {
   'web/build/index.html',
-	'web/build/**/*',
+   'web/build/**/*',
   'src/shared/*.lua'
 }
 
