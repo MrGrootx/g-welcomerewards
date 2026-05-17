@@ -14,6 +14,10 @@ Config.SystemSettings = {
 -- g-notifications package - https://groot-development.tebex.io/package/6838310
 Config.Notify = "g-notifications" -- supported Notification's' - "g-notifications" | "ox_lib" | "esx" | "qbcore" | "okok"  | 17mov | standalone
 
+-- QBCore | QBox - pillboxgarage | ESX - SanAndreasAvenue - you can change it
+Config.DefaultParking = "pillboxgarage" -- default parking for vehicles
+
+
 Config.WelcomePackage = {
 	OpenMenuType = "location", -- supported types - "location" | "command" | "inventory_item"
 	SlashCommand = "welcome", -- Command to open the shop if OpenMenuType is "command
@@ -55,7 +59,7 @@ Config.WelcomePackage = {
 		},
 	},
 	StarterVehicle = {
-		name = "t20", -- vehicle spawn code
+		name = "t20", -- vehicle spawn code (use addon spawn name for custom cars)
 		label = "Progen T20",
 		class = "Super Class",
 		seats = 2,
@@ -66,5 +70,15 @@ Config.WelcomePackage = {
 			grip = 91,
 		},
 		imageUrl = "https://docs.fivem.net/vehicles/t20.webp",
+	},
+	VehicleSpawn = {
+		Enable = true,
+		SpawnClearRadius = 3.0,
+		SpawnClearHorizontalOnly = true,
+		coords = {
+			vec4(-1037.0126, -2728.0090, 19.6819, 238.0340),
+			vec4(-1031.7378, -2731.0923, 19.6765, 236.0267),
+			vec4(-1025.7272, -2734.7009, 19.6703, 237.5941),
+		},
 	},
 }

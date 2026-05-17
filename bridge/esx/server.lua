@@ -208,7 +208,10 @@ function G.Server.AddVehicleToFrameworkGarage(src, data)
 
     local identifier = xPlayer.identifier
     local parking = Config.SystemSettings.defaultParking
-    local plate = G.Server.GeneratePlate()
+    local plate = data.plate
+    if type(plate) ~= "string" or plate == "" then
+        plate = G.Server.GeneratePlate()
+    end
 
     local query = [[
         INSERT INTO owned_vehicles (`owner`, `plate`, `vehicle`, `type`, `stored`, `parking`)

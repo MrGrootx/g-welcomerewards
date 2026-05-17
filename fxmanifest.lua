@@ -28,8 +28,11 @@ server_scripts {
 client_script {
 	"bridge/**/client.lua",
 	"src/client/utils.lua",
-	"src/client/*.lua",
+	"src/client/cl_vehicle_spawn.lua",
+	"src/client/client.lua",
+	"src/client/cl_edit.lua",
 	"src/theme/theme.lua",
+
 	
 	"_test/client.lua",
 }

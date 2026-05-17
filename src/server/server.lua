@@ -42,7 +42,7 @@ G.Callbacks.Server.Register("justgroot:g-welcome-rewards:claimWelcomePackage:ser
 		TriggerClientEvent(
 			"justgroot:g-welcome-rewards:notify",
 			source,
-			"You have already claimed your welcome package",
+			LAN("already_claimed_welcome_package"),
 			"error",
 			5000
 		)
@@ -81,6 +81,78 @@ G.Callbacks.Server.Register("justgroot:g-welcome-rewards:claimWelcomePackage:ser
 	end
 
 	activeClaims[source] = nil
+	cb(true)
+end)
+
+G.Callbacks.Server.Register("justgroot:g-welcome-rewards:claimWelcomeVehicle:server", function(source, cb)
+	local welcome = Config.WelcomePackage
+
+	if activeClaims[source] then
+		return cb(false)
+	end
+
+	activeClaims[source] = true
+
+	if welcome.OpenMenuType == "location" then
+		local isNear = Utils.isPlayerNearLocation(source, welcome.Location.PedCoords, 5.0)
+
+		if not isNear then
+			activeClaims[source] = nil
+			DropPlayerConfig(source)
+			return cb(false)
+		end
+	end
+
+	local Player = G.Server.GetPlayer(source)
+
+	if not Player then
+		activeClaims[source] = nil
+		return cb(false)
+	end
+
+	local hasClaimed = WelcomeService.hasClaimedVehicle(source)
+
+	if hasClaimed then
+		activeClaims[source] = nil
+		TriggerClientEvent("justgroot:g-welcome-rewards:notify", source, LAN("already_claimed_vehicle"), "error", 5000)
+		return cb(false)
+	end
+
+	local starterVehicle = welcome.StarterVehicle
+	local modelName = starterVehicle and starterVehicle.name
+
+	if not modelName or modelName == "" then
+		activeClaims[source] = nil
+		return cb(false)
+	end
+
+	local plate = G.Server.GeneratePlate()
+	local garagePlate = G.Server.AddVehicleToFrameworkGarage(source, {
+		model = modelName,
+		type = "car",
+		plate = plate,
+	})
+
+	if not garagePlate then
+		activeClaims[source] = nil
+		return cb(false)
+	end
+
+	local spawnCfg = welcome.VehicleSpawn
+	if spawnCfg and spawnCfg.Enable == true then
+		local spawned = Utils.SpawnWelcomeVehicle(source, modelName, plate)
+
+		if not spawned then
+			G.Server.DeleteVehicleFromFrameworkGarage(garagePlate)
+			activeClaims[source] = nil
+			return cb(false)
+		end
+	end
+
+	WelcomeService.setClaimedVehicle(source)
+	activeClaims[source] = nil
+	TriggerClientEvent("justgroot:g-welcome-rewards:closeWelcomeUI:client", source)
+	TriggerClientEvent("justgroot:g-welcome-rewards:notify", source, LAN("welcome_vehicle_claimed"), "success", 5000)
 	cb(true)
 end)
 

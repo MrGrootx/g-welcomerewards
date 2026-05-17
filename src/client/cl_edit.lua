@@ -29,7 +29,7 @@ local function getCoords(pedCoords)
 end
 
 local function spawnPed(coords, model, scenario)
-	local hash = RRequestModel(model, 20000)
+	local hash = RRequestModel(model, LAN("loading"))
 	if not hash then
 		if Config.SystemSettings.Debug then
 			print(("[g-welcome-rewards] failed to load ped model: %s"):format(tostring(model)))

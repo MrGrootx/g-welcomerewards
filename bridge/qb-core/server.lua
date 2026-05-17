@@ -206,7 +206,10 @@ function G.Server.AddVehicleToFrameworkGarage(src, data)
 
    local citizenid = player.PlayerData.citizenid
    local parking = Config.BossMenuSettings.defaultParking or "default"
-   local plate = G.Server.GeneratePlate()
+   local plate = data.plate
+   if type(plate) ~= "string" or plate == "" then
+      plate = G.Server.GeneratePlate()
+   end
    local modelHash = GetHashKey(data.model)
 
 

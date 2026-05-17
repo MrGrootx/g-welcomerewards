@@ -46,6 +46,11 @@ end
 
 RegisterCommand("open-welcome-ui", OpenWelcomeUI, false)
 
+RegisterNetEvent("justgroot:g-welcome-rewards:closeWelcomeUI:client", function()
+	toggleNuiFrame(false)
+	SendReactMessage("setVisibleApp", false)
+end)
+
 RegisterNUICallback("justgroot:g-welcome-rewards:getWelcomePackages", function(data, cb)
 	local items = Config.WelcomePackage.StarterPackages
 	cb(items)

@@ -47,29 +47,44 @@ function CCreateBlip(x, y, z, idtype, idcolor, text, scale, set_route)
 	end
 end
 
-function RRequestModel(model, timeout)
+local function showLoadingSpinner(text)
+	if BusyspinnerIsOn() then
+		BusyspinnerOff()
+	end
+
+	BeginTextCommandBusyspinnerOn("STRING")
+	AddTextComponentSubstringPlayerName(text or "Loading...")
+	EndTextCommandBusyspinnerOn(4)
+end
+
+local function hideLoadingSpinner()
+	if BusyspinnerIsOn() then
+		BusyspinnerOff()
+	end
+end
+
+--- Loads a vehicle model (GTA or addon/custom) and shows the native loading spinner while streaming.
+function RRequestModel(model, loadingText)
 	if type(model) ~= "number" then
 		model = joaat(model)
+	end
+
+	if model == 0 then
+		return false
 	end
 
 	if HasModelLoaded(model) then
 		return model
 	end
 
-	if not IsModelValid(model) or not IsModelInCdimage(model) then
-		return false
-	end
-
 	RequestModel(model)
-	local startTime = GetGameTimer()
+	showLoadingSpinner(loadingText)
 
 	while not HasModelLoaded(model) do
-		if GetGameTimer() - startTime > timeout then
-			return false
-		end
 		Wait(100)
 	end
 
+	hideLoadingSpinner()
 	return model
 end
 
