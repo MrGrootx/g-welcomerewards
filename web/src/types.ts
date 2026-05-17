@@ -1,5 +1,6 @@
 export interface SystemSettings {
     Currency: string;
+    position: "left" | "right" | "center";
     inventoryImagePath?: string;
 }
 

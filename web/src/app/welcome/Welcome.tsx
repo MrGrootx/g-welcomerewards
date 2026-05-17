@@ -162,6 +162,8 @@ const Welcome = () => {
     const { systemSettings } = useWelcome()
     const L = useLocalization()
 
+    
+
     const contentRef = useRef<HTMLDivElement>(null)
     const [needsScroll, setNeedsScroll] = useState(false)
 

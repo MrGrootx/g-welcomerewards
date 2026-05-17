@@ -1,5 +1,4 @@
 import App from "@/app/welcome/App";
-import App2 from "@/app/App2";
 import { Route, Routes } from "react-router-dom";
 import { VisibilityProvider } from "./VisibilityProvider";
 

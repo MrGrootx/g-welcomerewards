@@ -31,6 +31,7 @@ end
 function SystemSettings()
 	local data = {
 		Currency = Config.SystemSettings.Currency,
+		position = Config.SystemSettings.position or "center",
 		inventoryImagePath = G.Inventory.inventoryPath,
 	}
 	SendReactMessage("justgroot:systemsettings:systemsettings", data)

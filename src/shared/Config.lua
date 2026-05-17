@@ -9,6 +9,7 @@ Config.SystemSettings = {
 	Debug = true,
 	theme = "shadcn_dark", -- Theme name from Config.Theme (e.g., "gblue", "custom")
 	Currency = "$",
+	position = "center", -- supported: "left" | "right" | "center"
 }
 
 -- g-notifications package - https://groot-development.tebex.io/package/6838310
@@ -56,6 +57,34 @@ Config.WelcomePackage = {
 			quantity = 1000,
 			image = "bank.png",
 			type = "bank",
+		},
+		{
+			name = "phone",
+			Label = "Phone",
+			quantity = 1,
+			image = "phone.png",
+			type = "item",
+		},
+		{
+			name = "radio",
+			Label = "Radio",
+			quantity = 1,
+			image = "radio.png",
+			type = "item",
+		},
+		{
+			name = "bandage",
+			Label = "Bandage",
+			quantity = 5,
+			image = "bandage.png",
+			type = "item",
+		},
+		{
+			name = "fixkit",
+			Label = "Repair Kit",
+			quantity = 1,
+			image = "advancedkit.png",
+			type = "item",
 		},
 	},
 	StarterVehicle = {
