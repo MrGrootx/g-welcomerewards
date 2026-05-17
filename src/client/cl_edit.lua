@@ -70,14 +70,14 @@ local function addTarget(coords, label, distance)
 
 	local options = {
 		{
-            name = targetZoneName,
-            icon = "fas fa-gift",
-            label = label,
-            distance = distance,
-            onSelect = function()
-                OpenWelcomeUI()
-            end,
-        }
+			name = targetZoneName,
+			icon = "fas fa-gift",
+			label = label,
+			distance = distance,
+			onSelect = function()
+				OpenWelcomeUI()
+			end,
+		}
 	}
 
 	targetZoneId = Target.AddTargetBoxZone(
@@ -195,3 +195,48 @@ function CreateWelcomeRewardsBlip()
 end
 
 CreateWelcomeRewardsBlip()
+
+
+function GiveVehicleKeysToPlayer(vehicle)
+	local plate = GetVehicleNumberPlateText(vehicle)
+	local vehicleEntity = vehicle
+
+	-- QBCore Vehicle Keys
+	if GetResourceState('qb-vehiclekeys') == 'started' then
+		TriggerEvent("vehiclekeys:client:SetOwner", plate)
+
+		-- jaksam-vehicles-keys
+	elseif GetResourceState('jaksam-vehicles-keys') == 'started' then
+		TriggerServerEvent("vehicles_keys:selfGiveVehicleKeys", plate)
+
+		-- mk_vehiclekeys
+	elseif GetResourceState('mk_vehiclekeys') == 'started' then
+		exports["mk_vehiclekeys"]:AddKey(vehicleEntity)
+		-- wasabi_carlock
+	elseif GetResourceState('wasabi_carlock') == 'started' then
+		exports.wasabi_carlock:GiveKey(plate)
+
+		-- cd_garage
+	elseif GetResourceState('cd_garage') == 'started' then
+		TriggerEvent("cd_garage:AddKeys", plate)
+
+		-- okokGarage
+	elseif GetResourceState('okokGarage') == 'started' then
+		TriggerServerEvent("okokGarage:GiveKeys", plate)
+
+		-- MrNewbVehicleKeys
+	elseif GetResourceState('MrNewbVehicleKeys') == 'started' then
+		exports.MrNewbVehicleKeys:GiveKeys(vehicleEntity)
+
+		-- Renewed Vehicle Keys
+	elseif GetResourceState('Renewed-Vehiclekeys') == 'started' then
+		exports["Renewed-Vehiclekeys"]:addKey(plate)
+
+		-- tgiann-hotwire
+	elseif GetResourceState('tgiann-hotwire') == 'started' then
+		exports["tgiann-hotwire"]:CheckKeyInIgnitionWhenSpawn(vehicleEntity, plate)
+	else
+		print("Vehicle keys not found")
+		-- add your own vehicle keys here
+	end
+end

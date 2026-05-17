@@ -176,10 +176,7 @@ function G.Server.IsPalteTaken(plate)
         return true
     end
 
-    local bossRes = MySQL.Sync.fetchAll('SELECT * FROM g_bossmenu_job_ownable_vehicles WHERE vehPlate = @plate', {
-        ['@plate'] = plate
-    })
-    return bossRes[1] ~= nil
+    return false
 end
 
 function G.Server.GeneratePlate()
@@ -207,7 +204,7 @@ function G.Server.AddVehicleToFrameworkGarage(src, data)
     end
 
     local identifier = xPlayer.identifier
-    local parking = Config.SystemSettings.defaultParking
+    local parking = Config.DefaultParking
     local plate = data.plate
     if type(plate) ~= "string" or plate == "" then
         plate = G.Server.GeneratePlate()
@@ -218,14 +215,14 @@ function G.Server.AddVehicleToFrameworkGarage(src, data)
         VALUES (?, ?, ?, ?, ?, ?)
     ]]
 
-    local params = {identifier, plate, json.encode({
+    local params = { identifier, plate, json.encode({
         model = GetHashKey(data.model),
         plate = plate
-    }), data.type, 1, parking}
+    }), data.type, 1, parking }
 
     local insertId = MySQL.insert.await(query, params)
     if not insertId then
-        print(("[g-bossmenu] Failed to insert owned vehicle for %s"):format(identifier))
+        print(("[g-welcomerewards] Failed to insert owned vehicle for %s"):format(identifier))
         return false
     end
 
@@ -233,6 +230,6 @@ function G.Server.AddVehicleToFrameworkGarage(src, data)
 end
 
 function G.Server.DeleteVehicleFromFrameworkGarage(plate)
-    local affected = MySQL.update.await('DELETE FROM owned_vehicles WHERE plate = ?', {plate})
+    local affected = MySQL.update.await('DELETE FROM owned_vehicles WHERE plate = ?', { plate })
     return affected and affected > 0
 end

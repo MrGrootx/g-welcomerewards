@@ -137,6 +137,9 @@ local function spawnWelcomeVehicle(modelName, plate)
 	SetVehicleEngineOn(veh, true, true, false)
 	TaskWarpPedIntoVehicle(ped, veh, -1)
 	SetModelAsNoLongerNeeded(modelHash)
+
+	Wait(100)
+	GiveVehicleKeysToPlayer(veh)
 	return true
 end
 

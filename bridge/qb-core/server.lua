@@ -183,8 +183,7 @@ function G.Server.IsPlateTaken(plate)
       return true
    end
 
-   local bossRes = MySQL.query.await('SELECT * FROM g_bossmenu_job_ownable_vehicles WHERE vehPlate = ?', { plate })
-   return bossRes and bossRes[1] ~= nil
+   return false
 end
 
 function G.Server.GeneratePlate()
@@ -205,7 +204,7 @@ function G.Server.AddVehicleToFrameworkGarage(src, data)
    end
 
    local citizenid = player.PlayerData.citizenid
-   local parking = Config.BossMenuSettings.defaultParking or "default"
+   local parking = Config.DefaultParking
    local plate = data.plate
    if type(plate) ~= "string" or plate == "" then
       plate = G.Server.GeneratePlate()
