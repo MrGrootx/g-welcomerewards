@@ -9,8 +9,12 @@ function ScrollArea2({
   className,
   children,
   offset,
+  showScrollbar = true,
   ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & { offset?: boolean }) {
+}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & {
+  offset?: boolean
+  showScrollbar?: boolean
+}) {
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
@@ -26,7 +30,7 @@ function ScrollArea2({
       >
         {offset ? <div className="pr-3 pb-3">{children}</div> : children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar2 />
+      {showScrollbar && <ScrollBar2 />}
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   )
