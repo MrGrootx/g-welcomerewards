@@ -171,3 +171,27 @@ end
 RegisterNetEvent("justgroot:g-welcome-rewards:notify", function(message, type, duration)
 	Notify(message, type, duration)
 end)
+
+
+function CreateWelcomeRewardsBlip()
+	if not Config.WelcomePackage.Blip.Enable then
+		return
+	end
+
+	local blip = AddBlipForCoord(
+		Config.WelcomePackage.Location.PedCoords.x,
+		Config.WelcomePackage.Location.PedCoords.y,
+		Config.WelcomePackage.Location.PedCoords.z
+	)
+
+	SetBlipSprite(blip, Config.WelcomePackage.Blip.BlipId)
+	SetBlipColour(blip, Config.WelcomePackage.Blip.BlipColor)
+	SetBlipScale(blip, Config.WelcomePackage.Blip.BlipScale)
+	SetBlipDisplay(blip, Config.WelcomePackage.Blip.BlipDisplay)
+	SetBlipAsShortRange(blip, true)
+	BeginTextCommandSetBlipName("STRING")
+	AddTextComponentString(Config.WelcomePackage.Blip.BlipLabel)
+	EndTextCommandSetBlipName(blip)
+end
+
+CreateWelcomeRewardsBlip()

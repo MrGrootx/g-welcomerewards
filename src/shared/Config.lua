@@ -29,6 +29,14 @@ Config.WelcomePackage = {
 		PedScenario = "WORLD_HUMAN_CLIPBOARD", -- optional: scenario name
 		TargetDistance = 2.5,
 	},
+	Blip = {
+		Enable = true,
+		BlipId = 826,
+		BlipColor = 3,
+		BlipScale = 0.8,
+		BlipDisplay = 4,
+		BlipLabel = "Welcome Rewards",
+	},
 	StarterPackages = {
 		{
 			name = "water", -- item spawn code
