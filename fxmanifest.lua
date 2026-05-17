@@ -3,7 +3,7 @@ game 'gta5'
 lua54 'yes'
 
 author "G3DEV - justgroot"
-description "A boilerplate for my feature project"
+description "A welcome rewards system"
 version '1.0.0'
 
 shared_scripts {
@@ -11,20 +11,21 @@ shared_scripts {
 	"locales/locale.lua",
 	"src/shared/nui_localizations.lua",
 	"locales/translations/*.lua",
-	-- "src/utils/global.lua",
 }
 
 server_scripts {
+	"@oxmysql/lib/MySQL.lua",
+	"src/server/init/*.lua",
 	"src/shared/sv_config.lua",
-	-- "@oxmysql/lib/MySQL.lua",
-	-- "bridge/**/server.lua",
+	"bridge/**/server.lua",
 	-- "src/server/utils.lua",
 	"src/server/*.lua",
 }
 
 
 client_script {
-	-- "bridge/**/client.lua",
+	"bridge/**/client.lua",
+	"src/client/utils.lua",
 	"src/client/*.lua",
 	"src/theme/theme.lua",
 }

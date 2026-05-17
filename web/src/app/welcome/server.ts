@@ -18,3 +18,19 @@ export const getWelcomeVehicles = async () => {
     }
     return fetchNui<WelcomeVehicle>('justgroot:g-welcome-rewards:getWelcomeVehicle');
 }
+
+export const claimWelcomePackage = async () => {
+    if (isEnvBrowser()) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return true;
+    }
+    return fetchNui<boolean>('justgroot:g-welcome-rewards:claimWelcomePackage');
+}
+
+export const claimWelcomeVehicle = async () => {
+    if (isEnvBrowser()) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return true;
+    }
+    return fetchNui<boolean>('justgroot:g-welcome-rewards:claimWelcomeVehicle');
+}

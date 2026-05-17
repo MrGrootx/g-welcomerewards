@@ -3,8 +3,10 @@ import App3 from "./app/App3";
 import { VisibilityProvider } from "./providers/VisibilityProvider";
 import { debugData } from "./utils/debugData";
 import App2 from "./app/App2";
-import { SystemSettings, WelcomeVehicle } from "./types";
-import { MockVehicles } from "./data/MockItems";
+import { SystemSettings } from "./types";
+import { setSystemSettings } from "./store/Welcome-slice";
+import { useDispatch } from "react-redux";
+import { useNuiEvent } from "./hooks/useNuiEvent";
 
 debugData([
   {
@@ -23,7 +25,7 @@ debugData([
 
 debugData<SystemSettings>([
   {
-    action: "setSystemSettings",
+    action: "justgroot:systemsettings:systemsettings",
     data: {
       Currency: "$",
     },
@@ -31,6 +33,10 @@ debugData<SystemSettings>([
 ]);
 
 const ManageRender = () => {
+  const dispatch = useDispatch();
+  useNuiEvent("justgroot:systemsettings:systemsettings", (data: SystemSettings) => {
+    dispatch(setSystemSettings(data));
+  });
   return (
     <>
       <Router />

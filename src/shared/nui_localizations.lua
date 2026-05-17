@@ -3,7 +3,7 @@ function Localization()
         order_details = LAN("order_details"),
     }
     SendNUIMessage({
-        action = "resource:localizations",
+        action = "resource:localizations1",
         data = translations,
     })
 end

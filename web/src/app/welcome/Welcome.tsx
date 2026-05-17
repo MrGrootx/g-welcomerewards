@@ -6,10 +6,10 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useWelcome } from '@/store/store'
 import { WelcomeItem, WelcomeVehicle } from '@/types'
 import { getImageUrl } from '@/utils/getImageUrl'
-import { useQuery } from '@tanstack/react-query'
-import { Activity, CircleGauge, Gauge, Zap } from 'lucide-react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { Activity, CircleGauge, Gauge, Loader2, Zap } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { getWelcomePackage, getWelcomeVehicles } from './server'
+import { claimWelcomePackage, claimWelcomeVehicle, getWelcomePackage, getWelcomeVehicles } from './server'
 import { useLocalization } from '@/store/Localization-slice'
 
 const SCROLL_ITEM_THRESHOLD = 8
@@ -115,6 +115,10 @@ const VehicleCard = ({ vehicle }: { vehicle: WelcomeVehicle }) => {
         { label: L.grip, value: vehicle.stats.grip, icon: CircleGauge },
     ]
 
+    const { mutate: claimWelcomeVehicleMutation, isPending: isClaimingVehicle } = useMutation({
+        mutationFn: claimWelcomeVehicle,
+    })
+
     return (
         <div className='mt-2 overflow-hidden rounded-lg border text-xs'>
             <div className='relative h-32 overflow-hidden bg-gradient-to-br from-muted via-muted/60 to-background'>
@@ -132,7 +136,7 @@ const VehicleCard = ({ vehicle }: { vehicle: WelcomeVehicle }) => {
                     <p className='text-[10px] text-muted-foreground'>{vehicle.class} · {vehicle.seats} {L.seats}</p>
                 </div>
                 <div className='absolute right-2.5 bottom-2.5'>
-                    <Button size='sm' variant='default' className='h-7 rounded-sm text-xs z-50'>
+                    <Button size='sm' variant='default' className='h-7 rounded-sm text-xs z-50' disabled={isClaimingVehicle} onClick={() => claimWelcomeVehicleMutation()}>
                         {L.claim_vehicle}
                     </Button>
                 </div>
@@ -204,6 +208,10 @@ const Welcome = () => {
         </div>
     )
 
+    const { mutate: claimWelcomePackageMutation, isPending: isClaimingPackage } = useMutation({
+        mutationFn: claimWelcomePackage,
+    })
+   
     return (
         <div className='p-4 font-Outfit'>
             <div>
@@ -225,7 +233,7 @@ const Welcome = () => {
                                     : `${welcomePackage?.length ?? 0} ${L.rewards_ready_to_claim}`}
                             </p>
                         </div>
-                        <Button size='sm' variant={'default'} className='h-7 rounded-sm text-xs z-50'>
+                        <Button size='sm' variant={'default'} className='h-7 rounded-sm text-xs z-50' disabled={isClaimingPackage} onClick={() => claimWelcomePackageMutation()}>
                             {L.collect_package}
                         </Button>
                     </div>
