@@ -45,7 +45,9 @@ function OpenWelcomeUI()
 	sendThemeToNui()
 end
 
-RegisterCommand("open-welcome-ui", OpenWelcomeUI, false)
+if Config.WelcomePackage.OpenMenuType == "command" then
+	RegisterCommand(Config.WelcomePackage.SlashCommand, OpenWelcomeUI, false)
+end
 
 RegisterNetEvent("justgroot:g-welcome-rewards:closeWelcomeUI:client", function()
 	toggleNuiFrame(false)

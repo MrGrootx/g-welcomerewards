@@ -20,7 +20,7 @@ Config.DefaultParking = "pillboxgarage" -- default parking for vehicles
 
 
 Config.WelcomePackage = {
-	OpenMenuType = "location", -- supported types - "location" | "command" | "inventory_item"
+	OpenMenuType = "location", -- supported types - "location" | "command"
 	SlashCommand = "welcome", -- Command to open the shop if OpenMenuType is "command
 	Location = { -- Location settings if OpenMenuType is "location"
 		EnablePed = true, -- Enable the location ped
