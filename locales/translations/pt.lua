@@ -1,0 +1,23 @@
+
+Language["pt"] = {
+    use_welcome_rewards = "Recompensas de Boas-vindas",
+    vehicle_spawn_area_blocked = "Área de spawn do veículo bloqueada",
+    loading = "Carregando...",
+    vehicle_loading = "Carregando veículo...",
+    already_claimed_welcome_package = "Você já resgatou seu pacote de boas-vindas",
+    already_claimed_vehicle = "Você já resgatou seu veículo",
+    welcome_vehicle_claimed = "Você resgatou seu veículo de boas-vindas",
+    new_citizen_package = "Pacote de Novo Cidadão",
+    welcome_to_the_city = "Bem-vindo à cidade. Resgate suas recompensas iniciais e comece sua jornada.",
+    collect_package = "Coletar Pacote",
+    starter_package = "Pacote Inicial",
+    loading_rewards = "Carregando recompensas...",
+    rewards_ready_to_claim = "recompensas prontas para resgatar",
+    speed = "Velocidade",
+    acceleration = "Aceleração",
+    braking = "Frenagem",
+    grip = "Aderência",
+    seats = "assentos",
+    claim_vehicle = "Resgatar Veículo",
+    starter_vehicle = "Veículo Inicial",
+}

@@ -41,7 +41,7 @@ function OpenWelcomeUI()
 	toggleNuiFrame(true)
 	SendReactMessage("setVisibleApp", true)
 	SystemSettings()
-	-- Localization()
+	Localization()
 	sendThemeToNui()
 end
 

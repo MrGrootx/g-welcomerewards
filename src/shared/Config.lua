@@ -5,7 +5,7 @@ Config.CheckForUpdates = true -- Check for updates on server start
 Config.AutoImportSQL = true -- Automatically import on server start
 
 Config.SystemSettings = {
-	Language = "en",
+	Language = "en", -- en - english | de - german | es - spanish | fr - french | pt - portuguese | ru - russian | tr - turkish
 	Debug = true,
 	theme = "shadcn_dark", -- Theme name from Config.Theme (e.g., "gblue", "custom")
 	Currency = "$",
