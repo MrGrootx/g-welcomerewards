@@ -12,3 +12,16 @@ export interface WelcomeItem {
     image: string;
     type: "item" | "cash" | "bank";
 }
+
+export interface WelcomeVehicle {
+    label: string;
+    class: string;
+    seats: number;
+    stats: {
+        speed: number;
+        acceleration: number;
+        braking: number;
+        grip: number;
+    },
+    imageUrl: string;
+}

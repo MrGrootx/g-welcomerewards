@@ -1,4 +1,4 @@
-import { WelcomeItem } from "@/types";
+import { WelcomeItem, WelcomeVehicle } from "@/types";
 
 export const MockItems: WelcomeItem[] = [
     {
@@ -58,3 +58,16 @@ export const MockItems: WelcomeItem[] = [
         type: "cash",
     },
 ];
+
+export const MockVehicles: WelcomeVehicle = {
+    label: "Progen T20",
+    class: "Super Class",
+    seats: 4,
+    stats: {
+        speed: 98,
+        acceleration: 89,
+        braking: 82,
+        grip: 91,
+    },
+    imageUrl: "https://docs.fivem.net/vehicles/t20.webp",
+}

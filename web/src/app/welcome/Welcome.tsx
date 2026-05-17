@@ -4,22 +4,17 @@ import { ScrollArea2 } from '@/components/ui/scroll-area2'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useWelcome } from '@/store/store'
-import { WelcomeItem } from '@/types'
+import { WelcomeItem, WelcomeVehicle } from '@/types'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { useQuery } from '@tanstack/react-query'
-import { Activity, Car, CircleGauge, Gauge, Zap } from 'lucide-react'
+import { Activity, CircleGauge, Gauge, Zap } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { getWelcomePackage } from './server'
+import { getWelcomePackage, getWelcomeVehicles } from './server'
+import { useLocalization } from '@/store/Localization-slice'
 
 const SCROLL_ITEM_THRESHOLD = 8
 const SKELETON_COUNT = 8
 
-const vehicleSpecs = [
-    { label: 'Speed', value: 98, icon: Gauge },
-    { label: 'Accel', value: 89, icon: Zap },
-    { label: 'Brake', value: 82, icon: Activity },
-    { label: 'Grip', value: 91, icon: CircleGauge },
-]
 
 const RewardAmountLabel = ({
     item,
@@ -87,8 +82,81 @@ const PackageGridSkeleton = () => (
     </div>
 )
 
+const VehicleCardSkeleton = () => (
+    <div className='mt-2 overflow-hidden rounded-lg border text-xs'>
+        <div className='relative h-32 overflow-hidden bg-gradient-to-br from-muted via-muted/60 to-background'>
+            <div className='absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent' />
+            <Skeleton className='absolute left-2.5 top-2.5 h-4 w-[72px] rounded-[4px]' />
+            <div className='absolute bottom-2.5 left-2.5 right-2.5'>
+                <Skeleton className='h-3.5 w-24' />
+                <Skeleton className='mt-1 h-2.5 w-28' />
+            </div>
+            <Skeleton className='absolute right-2.5 bottom-2.5 h-7 w-[88px] rounded-sm' />
+        </div>
+
+        <div className='grid grid-cols-4 divide-x divide-border border-t bg-muted/30'>
+            {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className='flex flex-col items-center gap-1 px-1 py-2.5'>
+                    <Skeleton className='size-3 rounded-full' />
+                    <Skeleton className='h-2.5 w-8' />
+                    <Skeleton className='h-3 w-6' />
+                </div>
+            ))}
+        </div>
+    </div>
+)
+
+const VehicleCard = ({ vehicle }: { vehicle: WelcomeVehicle }) => {
+    const L = useLocalization()
+    const vehicleSpecs = [
+        { label: L.speed, value: vehicle.stats.speed, icon: Gauge },
+        { label: L.acceleration, value: vehicle.stats.acceleration, icon: Zap },
+        { label: L.braking, value: vehicle.stats.braking, icon: Activity },
+        { label: L.grip, value: vehicle.stats.grip, icon: CircleGauge },
+    ]
+
+    return (
+        <div className='mt-2 overflow-hidden rounded-lg border text-xs'>
+            <div className='relative h-32 overflow-hidden bg-gradient-to-br from-muted via-muted/60 to-background'>
+                <img
+                    src={vehicle.imageUrl}
+                    alt={vehicle.label}
+                    className='absolute inset-0 h-full w-full object-contain object-center p-3'
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent' />
+                <Badge variant='light' color='blue' className='absolute left-2.5 top-2.5 px-2 py-0 text-[10px] rounded-[4px]'>
+                    {L.starter_vehicle}
+                </Badge>
+                <div className='absolute bottom-2.5 left-2.5 right-2.5'>
+                    <p className='text-sm font-semibold text-foreground'>{vehicle.label}</p>
+                    <p className='text-[10px] text-muted-foreground'>{vehicle.class} · {vehicle.seats} {L.seats}</p>
+                </div>
+                <div className='absolute right-2.5 bottom-2.5'>
+                    <Button size='sm' variant='default' className='h-7 rounded-sm text-xs z-50'>
+                        {L.claim_vehicle}
+                    </Button>
+                </div>
+            </div>
+
+            <div className='grid grid-cols-4 divide-x divide-border border-t bg-muted/30'>
+                {vehicleSpecs.map((spec) => {
+                    const Icon = spec.icon
+                    return (
+                        <div key={spec.label} className='flex flex-col items-center gap-1 px-1 py-2.5'>
+                            <Icon className='size-3 text-muted-foreground' />
+                            <span className='text-[10px] text-muted-foreground'>{spec.label}</span>
+                            <span className='text-xs font-semibold tabular-nums text-foreground'>{spec.value}</span>
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+
 const Welcome = () => {
     const { systemSettings } = useWelcome()
+    const L = useLocalization()
 
     const contentRef = useRef<HTMLDivElement>(null)
     const [needsScroll, setNeedsScroll] = useState(false)
@@ -97,9 +165,13 @@ const Welcome = () => {
         queryKey: ['welcome-package'],
         queryFn: getWelcomePackage,
     })
+    const { data: welcomeVehicle, isLoading: isVehiclesLoading } = useQuery({
+        queryKey: ['welcome-vehicles'],
+        queryFn: getWelcomeVehicles,
+    })
 
     const isPackageLoading = isLoading
-
+    const isVehicleLoading = isVehiclesLoading
     useEffect(() => {
         const content = contentRef.current
         if (!content || isPackageLoading) {
@@ -135,8 +207,8 @@ const Welcome = () => {
     return (
         <div className='p-4 font-Outfit'>
             <div>
-                <h4 className='font-semibold text-foreground '>New Citizen Package</h4>
-                <p className='font-semibold text-xs'>Welcome to the city. Claim your starter rewards and begin your journey.</p>
+                <h4 className='font-semibold text-foreground '>{L.new_citizen_package}</h4>
+                <p className='font-semibold text-xs'>{L.welcome_to_the_city}</p>
             </div>
             <Separator className='my-2' />
             <div className='overflow-hidden rounded-lg border text-xs '>
@@ -145,16 +217,16 @@ const Welcome = () => {
                         <div>
                             <div className='absolute inset-0 bg-gradient-to-t from-card/40 via-transparent to-transparent' />
                             <Badge variant='light' color='purple' className='relative px-2 py-0 text-[10px] rounded-[4px]'>
-                                Starter Package
+                                {L.starter_package}
                             </Badge>
                             <p className='relative mt-1.5 text-[10px] text-muted-foreground'>
                                 {isPackageLoading
-                                    ? 'Loading rewards...'
-                                    : `${welcomePackage?.length ?? 0} rewards ready to claim`}
+                                    ? L.loading_rewards
+                                    : `${welcomePackage?.length ?? 0} ${L.rewards_ready_to_claim}`}
                             </p>
                         </div>
                         <Button size='sm' variant={'default'} className='h-7 rounded-sm text-xs z-50'>
-                            Collect Package
+                            {L.collect_package}
                         </Button>
                     </div>
                 </div>
@@ -164,7 +236,8 @@ const Welcome = () => {
                         <PackageGridSkeleton />
                     </div>
                 ) : needsScroll ? (
-                    <ScrollArea2 className='h-[118px] border-t bg-muted/30' type='auto'>
+                    // @ts-ignore
+                    <ScrollArea2 className='h-[228px] border-t bg-muted/30' type='never'>
                         {packageGrid}
                     </ScrollArea2>
                 ) : (
@@ -172,41 +245,11 @@ const Welcome = () => {
                 )}
             </div>
 
-            <div className='mt-2 overflow-hidden rounded-lg border text-xs '>
-                <div className='relative h-32 overflow-hidden bg-gradient-to-br from-muted via-muted/60 to-background'>
-                    <img
-                        src='https://docs.fivem.net/vehicles/t20.webp'
-                        alt='T20'
-                        className='absolute inset-0 h-full w-full object-contain object-center p-3'
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent' />
-                    <Badge variant='light' color='blue' className='absolute left-2.5 top-2.5 px-2 py-0 text-[10px] rounded-[4px]'>
-                        Starter Vehicle
-                    </Badge>
-                    <div className='absolute bottom-2.5 left-2.5 right-2.5'>
-                        <p className='text-sm font-semibold text-foreground'>Progen T20</p>
-                        <p className='text-[10px] text-muted-foreground'>Super class · 2 seats</p>
-                    </div>
-                    <div className='absolute right-2.5 bottom-2.5'>
-                        <Button size='sm' variant={'default'} className='h-7 rounded-sm text-xs z-50'>
-                            Claim Vehicle
-                        </Button>
-                    </div>
-                </div>
-
-                <div className='grid grid-cols-4 divide-x divide-border border-t bg-muted/30'>
-                    {vehicleSpecs.map((spec) => {
-                        const Icon = spec.icon
-                        return (
-                            <div key={spec.label} className='flex flex-col items-center gap-1 px-1 py-2.5'>
-                                <Icon className='size-3 text-muted-foreground' />
-                                <span className='text-[10px] text-muted-foreground'>{spec.label}</span>
-                                <span className='text-xs font-semibold tabular-nums text-foreground'>{spec.value}</span>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+            {isVehicleLoading ? (
+                <VehicleCardSkeleton />
+            ) : welcomeVehicle ? (
+                <VehicleCard vehicle={welcomeVehicle} />
+            ) : null}
         </div>
     )
 }

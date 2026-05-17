@@ -3,7 +3,8 @@ import App3 from "./app/App3";
 import { VisibilityProvider } from "./providers/VisibilityProvider";
 import { debugData } from "./utils/debugData";
 import App2 from "./app/App2";
-import { SystemSettings } from "./types";
+import { SystemSettings, WelcomeVehicle } from "./types";
+import { MockVehicles } from "./data/MockItems";
 
 debugData([
   {
