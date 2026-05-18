@@ -6,7 +6,7 @@ Config.AutoImportSQL = true -- Automatically import on server start
 
 Config.SystemSettings = {
 	Language = "en", -- en - english | de - german | es - spanish | fr - french | pt - portuguese | ru - russian | tr - turkish
-	Debug = true,
+	Debug = false,
 	theme = "shadcn_dark", -- shadcn_dark, gblue, theme3, theme4, theme5, theme6
 	Currency = "$",
 	position = "center", -- supported: "left" | "right" | "center"
