@@ -13,15 +13,11 @@ Config.Theme = {
     ["gblue"] = {
         background = "rgb(12, 14, 18)",
         foreground = "rgb(240, 244, 248)",
-    
         card = "rgb(20, 24, 31)",
         card_foreground = "rgb(240, 244, 248)",
-    
         primary = "rgb(16, 185, 129)",         -- emerald main
         primary_foreground = "rgb(10, 15, 13)",
-    
         accent = "rgb(20, 184, 166)",          -- slightly more cyan for hover states
-    
         border = "rgb(32, 38, 48)"
     },
     ["theme3"] = {
