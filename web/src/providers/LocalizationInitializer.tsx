@@ -6,7 +6,7 @@ import { useNuiEvent } from "../hooks/useNuiEvent";
 
 export const LocalizationInitializer = () => {
   const dispatch = useDispatch();
-  useNuiEvent("justgroot-g-:localizations:g-welcomerewards", (data: LocalizationsI) => {
+  useNuiEvent("justgroot:g-welcome-rewards:localization", (data: LocalizationsI) => {
     dispatch(setLocalization(data));
   });
   return null;
