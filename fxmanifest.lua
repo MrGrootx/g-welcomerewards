@@ -4,7 +4,7 @@ lua54 'yes'
 
 author "G3DEV - justgroot"
 description "A welcome rewards system"
-version '1.0.0'
+version '1.1.0'
 
 shared_scripts {
 	"src/shared/Config.lua",
