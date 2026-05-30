@@ -1,9 +1,0 @@
-{
-    "Lua.diagnostics.globals": [
-        "lua54",
-        "server_scripts"
-    ],
-    "Lua.diagnostics.disable": [
-        "undefined-global"
-    ]
-}

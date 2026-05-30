@@ -15,7 +15,7 @@ function Localization()
 		starter_vehicle = LAN("starter_vehicle"),
 	}
 	SendNUIMessage({
-		action = "justgroot:g-welcome-rewards:localization",
+		action = "justgroot-g-:localizations:g-welcomerewards",
 		data = translations,
 	})
 end

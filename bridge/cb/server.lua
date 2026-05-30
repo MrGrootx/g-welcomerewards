@@ -1,3 +1,4 @@
+-- Credits to es_extended for these callbacks
 G = G or {}
 G.Callbacks = G.Callbacks or {}
 G.Callbacks.Server = {}

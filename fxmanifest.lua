@@ -21,7 +21,6 @@ server_scripts {
 	"bridge/**/server.lua",
 	"src/server/services/*.lua",
 	"src/server/*.lua",
-	
 }
 
 
@@ -32,9 +31,6 @@ client_script {
 	"src/client/client.lua",
 	"src/client/cl_edit.lua",
 	"src/theme/theme.lua",
-
-	
-	"_test/client.lua",
 }
 
 

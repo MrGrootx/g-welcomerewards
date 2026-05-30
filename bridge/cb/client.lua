@@ -1,3 +1,4 @@
+-- Credits to es_extended for these callbacks
 G = {}
 G.Callbacks = {}
 G.Callbacks.Client = {}
